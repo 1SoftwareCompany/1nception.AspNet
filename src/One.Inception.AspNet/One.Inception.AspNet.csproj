@@ -25,8 +25,8 @@
     <PackageProjectUrl>https://github.com/1SoftwareCompany/1nception</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
 
-    <AssemblyName>One.Inception</AssemblyName>
-    <RootNamespace>One.Inception</RootNamespace>
+    <AssemblyName>One.Inception.AspNet</AssemblyName>
+    <RootNamespace>One.Inception.AspNet</RootNamespace>
     <NeutralLanguage>en-US</NeutralLanguage>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <AssemblyVersion>12.0.0</AssemblyVersion>
