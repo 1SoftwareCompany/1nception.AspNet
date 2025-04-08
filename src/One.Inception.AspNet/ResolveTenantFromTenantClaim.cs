@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
-using Elders.Cronus.Multitenancy;
+using One.Inception.Multitenancy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 
-namespace Elders.Cronus.AspNetCore
+namespace One.Inception.AspNet
 {
     public class HttpContextTenantResolver : ITenantResolver<DefaultHttpContext>, ITenantResolver<HttpContext>
     {

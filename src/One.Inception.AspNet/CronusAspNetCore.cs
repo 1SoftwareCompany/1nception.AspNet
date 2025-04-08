@@ -1,6 +1,6 @@
-﻿using Elders.Cronus.AspNetCore.Exceptions;
-using Elders.Cronus.MessageProcessing;
-using Elders.Cronus.Multitenancy;
+﻿using One.Inception.AspNetCore.Exceptions;
+using One.Inception.MessageProcessing;
+using One.Inception.Multitenancy;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
@@ -10,11 +10,11 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Elders.Cronus.AspNetCore
+namespace One.Inception.AspNet
 {
-    public static class CronusAspNetCore
+    public static class InceptionAspNetExtensions
     {
-        public static IServiceCollection AddCronusAspNetCore(this IServiceCollection services)
+        public static IServiceCollection AddInceptionAspNet(this IServiceCollection services)
         {
             services.AddSingleton<ITenantResolver<DefaultHttpContext>, HttpContextTenantResolver>();
             services.AddSingleton<ITenantResolver<HttpContext>, HttpContextTenantResolver>();
@@ -23,19 +23,19 @@ namespace Elders.Cronus.AspNetCore
             return services;
         }
 
-        public static IApplicationBuilder UseCronusAspNetCore(this IApplicationBuilder app)
+        public static IApplicationBuilder UseInceptionAspNet(this IApplicationBuilder app)
         {
             return app.Use((context, next) =>
             {
                 bool shouldResolve = ShouldResolveTenant(context);
                 if (shouldResolve)
-                    return ResolveCronusContext(context, next);
+                    return ResolveInceptionContext(context, next);
 
                 return next.Invoke();
             });
         }
 
-        public static IApplicationBuilder UseCronusAspNetCore(this IApplicationBuilder app, Func<HttpContext, bool> shouldResolveTenant)
+        public static IApplicationBuilder UseInceptionAspNet(this IApplicationBuilder app, Func<HttpContext, bool> shouldResolveTenant)
         {
             return app.Use((context, next) =>
             {
@@ -45,22 +45,22 @@ namespace Elders.Cronus.AspNetCore
 
                 if (shouldResolve)
                 {
-                    return ResolveCronusContext(context, next);
+                    return ResolveInceptionContext(context, next);
                 }
 
                 return next.Invoke();
             });
         }
 
-        private static Task ResolveCronusContext(HttpContext context, Func<Task> next)
+        private static Task ResolveInceptionContext(HttpContext context, Func<Task> next)
         {
             try
             {
-                var cronusContextFactory = context.RequestServices.GetRequiredService<DefaultCronusContextFactory>();
-                CronusContext cronusContext = cronusContextFactory.Create(context, context.RequestServices);
+                var contextFactory = context.RequestServices.GetRequiredService<DefaultContextFactory>();
+                InceptionContext inceptionContext = contextFactory.Create(context, context.RequestServices);
 
-                ILogger logger = context.RequestServices.GetService<ILogger<CronusContext>>();
-                using (logger.BeginScope(s => s.AddScope(Log.Tenant, cronusContext.Tenant)))
+                ILogger logger = context.RequestServices.GetService<ILogger<InceptionContext>>();
+                using (logger.BeginScope(s => s.AddScope(Log.Tenant, inceptionContext.Tenant)))
                 {
                     return next.Invoke();
                 }
