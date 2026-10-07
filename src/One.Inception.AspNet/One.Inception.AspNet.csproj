@@ -33,7 +33,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="1nception" Version="13.2.4" />
+    <PackageReference Include="1nception" Version="13.2.5" />
   </ItemGroup>
 
 </Project>
