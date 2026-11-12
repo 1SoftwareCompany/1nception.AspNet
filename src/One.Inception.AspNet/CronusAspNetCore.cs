@@ -57,7 +57,7 @@ public static class InceptionAspNetExtensions
         try
         {
             var contextFactory = context.RequestServices.GetRequiredService<DefaultContextFactory>();
-            InceptionContext inceptionContext = contextFactory.Create(context, context.RequestServices);
+            InceptionContext inceptionContext = contextFactory.Create(context, context.RequestServices, context.RequestAborted);
 
             ILogger logger = context.RequestServices.GetService<ILogger<InceptionContext>>();
             using (logger.BeginScope(s => s.AddScope(Log.Tenant, inceptionContext.Tenant)))
